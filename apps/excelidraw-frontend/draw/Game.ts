@@ -29,7 +29,7 @@ export class Game {
     private clicked: boolean;
     private startX = 0;
     private startY = 0;
-    private selectedTool: Tool = "circle"
+    private selectedTool: Tool = "panTool"
     private scale: number = 1
     private panX: number = 0
     private panY: number = 0
@@ -91,7 +91,7 @@ export class Game {
 
             this.canvas.width / this.scale, 
             this.canvas.height/ this.scale);
-        this.ctx.fillStyle = "rgba(0, 0, 0)"
+        this.ctx.fillStyle = "rgba(18, 18, 18)"
         this.ctx.fillRect(  
             // Adjusts the offset of the canvas
             -this.panX / this.scale, 
@@ -119,12 +119,12 @@ export class Game {
         })
     }
 
-    mouseDownHandler = (e) => {
+    mouseDownHandler = (e : MouseEvent) => {
         this.clicked = true
         this.startX = e.clientX
         this.startY = e.clientY 
     }
-    mouseUpHandler = (e) => {
+    mouseUpHandler = (e : MouseEvent) => {
         this.clicked = false
         const width = (e.clientX - this.startX) / this.scale;
         const height = (e.clientY - this.startY) / this.scale;
@@ -178,7 +178,7 @@ export class Game {
         }))
     }
 
-    mouseMoveHandler = (e) => {
+    mouseMoveHandler = (e : MouseEvent) => {
         if (this.clicked) {
             const width = (e.clientX - this.startX) / this.scale;
             const height = (e.clientY - this.startY) / this.scale;
@@ -194,10 +194,10 @@ export class Game {
                 );
             } else if (selectedTool === "circle") {
                 const radius = Math.max(width, height) / 2;
-                const centerX = (this.startX - this.panX) / this.scale + radius;
-                const centerY = (this.startY - this.panY) / this.scale + radius;
+                const centerX = ((this.startX - this.panX) / this.scale) + radius;
+                const centerY = ((this.startY - this.panY) / this.scale) + radius;
                 this.ctx.beginPath();
-                this.ctx.arc(centerX, centerY, Math.abs(radius), 0, Math.PI * 2);
+                this.ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
                 this.ctx.stroke();
                 this.ctx.closePath();
             } else if (selectedTool === "pencil") {
@@ -229,7 +229,7 @@ export class Game {
 
 
 
-    mouseWheelHandler = (e) => {
+    mouseWheelHandler = (e : WheelEvent) => {
         e.preventDefault();
 
         const scaleAmount = -e.deltaY / 500;
