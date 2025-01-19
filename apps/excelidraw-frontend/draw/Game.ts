@@ -60,7 +60,7 @@ export class Game {
         this.canvas.removeEventListener("wheel", this.mouseWheelHandler)
     }
 
-    setTool(tool: "circle" | "pencil" | "rect") {
+    setTool(tool: "circle" | "pencil" | "rect" | "panTool") {
         this.selectedTool = tool;
     }
 
@@ -122,7 +122,7 @@ export class Game {
     mouseDownHandler = (e) => {
         this.clicked = true
         this.startX = e.clientX
-        this.startY = e.clientY
+        this.startY = e.clientY 
     }
     mouseUpHandler = (e) => {
         this.clicked = false
@@ -156,7 +156,12 @@ export class Game {
                 endX: (e.clientX - this.panX) / this.scale,
                 endY: (e.clientY - this.panY) / this.scale,
             }
+        } else if (selectedTool === "panTool"){
+            this.startX = e.clientX 
+            this.startY = e.clientY 
         }
+
+
 
         if (!shape) {
             return;
@@ -207,6 +212,17 @@ export class Game {
                 );
                 this.ctx.stroke();
                 this.ctx.closePath();
+            } else if (selectedTool === "panTool"){
+                const mouseX = e.clientX - this.startX 
+                const mouseY = e.clientY - this.startY
+
+                this.panX += mouseX / this.scale 
+                this.panY += mouseY / this.scale 
+
+                this.startX = e.clientX;
+                this.startY = e.clientY;
+
+                this.clearCanvas()
             }
         }
     };
