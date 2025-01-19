@@ -1,7 +1,7 @@
 import { initDraw } from "@/draw";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IconButton } from "./IconButton";
-import { Circle, Pencil, RectangleHorizontalIcon, Hand } from "lucide-react";
+import { Circle, Pencil, RectangleHorizontalIcon, Hand, Slash } from "lucide-react";
 import { Game } from "@/draw/Game";
 
 export type Tool = "circle" | "rect" | "pencil" | "panTool";
@@ -101,7 +101,7 @@ function Topbar({selectedTool, setSelectedTool}: {
             shortKey={2} 
             onClick={() => {setSelectedTool("pencil")}}
             activated={selectedTool === "pencil"}
-            icon={<Pencil />}/>
+            icon={<Slash />}/>
 
             <IconButton 
             shortKey={3}
