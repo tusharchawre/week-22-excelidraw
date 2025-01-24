@@ -34,7 +34,7 @@ export const Toolbar = ({activeTool, setActiveTool}: ToolbarProps) => {
     {
         tool: "pencil",
         icon: <Pencil />,
-        shortcut: 1
+        shortcut: 5
     },
     {
         tool: "erase",

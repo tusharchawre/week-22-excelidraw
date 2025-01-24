@@ -31,6 +31,7 @@ export const Canvas = ({roomId, socket , room}: CanvasProps) => {
     const [strokeFill, setStrokeFill] = useState<strokeFill>("rgba(211, 211, 211)")
     const [strokeWidth, setStrokeWidth] = useState<strokeWidth>(1)
     const [bgFill, setBgFill] = useState<bgFill>("rgba(0, 0, 0, 0)")
+    const [grabbing, setGrabbing] = useState(false)
 
     useEffect(()=>{
         game?.setTool(activeTool)
@@ -38,6 +39,42 @@ export const Canvas = ({roomId, socket , room}: CanvasProps) => {
         game?.setStrokeFill(strokeFill)
         game?.setBgFill(bgFill)
     })
+
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            switch (e.key) {
+                case "1":
+                    setActiveTool("grab");
+                    break;
+                case "2":
+                    setActiveTool("rect");
+                    break;
+                case "3":
+                    setActiveTool("ellipse");
+                    break;
+                case "4":
+                    setActiveTool("line");
+                    break;
+                case "5":
+                    setActiveTool("pencil");
+                    break;
+                case "6":
+                    setActiveTool("erase");
+                    break;
+                default:
+                    break;
+            }
+        };
+    
+        document.addEventListener("keydown", handleKeyDown);
+    
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [setActiveTool]); 
+    
 
     useEffect(()=>{
         if(canvasRef.current){
@@ -51,8 +88,24 @@ export const Canvas = ({roomId, socket , room}: CanvasProps) => {
             setGame(g)
 
 
+
+            if(activeTool === "grab"){
+                const handleGrab = () => {
+                    setGrabbing((prev)=> !prev)
+                }
+
+                document.addEventListener("mousedown", handleGrab)
+                document.addEventListener("mouseup", handleGrab)
+
+                return () =>{
+                    document.removeEventListener("mousedown", handleGrab)
+                    document.removeEventListener("mouseup", handleGrab)
+                }
+
+            }
             return () =>{
                 g.destroy()
+
             }
         }
 
@@ -68,7 +121,10 @@ export const Canvas = ({roomId, socket , room}: CanvasProps) => {
 
 
     return(
-        <div className="w-full h-screen">
+        <div className={`h-screen overflow-hidden 
+            ${(activeTool === "grab") ? 
+            (grabbing ? "cursor-grabbing" : "cursor-grab") : 
+            "cursor-crosshair"} ` }>
 
         <Toolbar activeTool={activeTool} setActiveTool={setActiveTool} />
         <Sidebar activeTool={activeTool} 
