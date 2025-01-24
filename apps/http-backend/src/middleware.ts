@@ -1,20 +1,28 @@
-import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "@repo/backend-common/config";
+import {Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken"
+import "dotenv/config"
 
+declare global{
+    namespace Express{
+        interface Request{
+            userId?: string
+        }
+    }
+}
 
-export function middleware(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers["authorization"] ?? "";
+export const middleware = (req: Request, res: Response , next : NextFunction) => {
+    const token = req.headers["authorization"] ?? ""
 
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token , process.env.JWT_SECRET || "123123") as {userId: string}
 
-    if (decoded) {
-        // @ts-ignore: TODO: Fix this
-        req.userId = decoded.userId;
-        next();
-    } else {
+    if(decoded){
+        req.userId = decoded.userId
+        next()
+    }
+    else{
         res.status(403).json({
-            message: "Unauthorized"
+            message: "Unauthorized!"
         })
     }
+
 }

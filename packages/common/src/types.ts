@@ -1,16 +1,26 @@
-import { z } from "zod";
+import {z} from "zod"
 
-export const CreateUserSchema = z.object({
-    username: z.string().min(3).max(20),
-    password: z.string(),
-    name: z.string()
+export const RegisterSchema = z.object({
+    username: z.string().min(1, {
+        message: "Username is required"
+    })
+    .max(20, {
+        message: "Username exceeds 20 characters!"
+    }),
+
+    email: z.string().email({message: "Invalid Email"}),
+    password: z.string().min(6, {message: "Password must exceed 6 characters!"})
 })
 
-export const SigninSchema = z.object({
-    username: z.string().min(3).max(20),
-    password: z.string(),
+
+export const LoginSchema = z.object({
+    email : z.string().email(),
+    password: z.string()
 })
+
 
 export const CreateRoomSchema = z.object({
-    name: z.string().min(3).max(20),
+    roomName : z.string().min(1 , {
+        message: "RoomName is required!"
+    })
 })

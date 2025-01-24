@@ -1,11 +1,14 @@
-import { RegisterForm } from "@/components/auth/Register-form"
+"use client"
+
+import { CreateRoomForm } from "@/components/auth/CreateRoomForm"
+
 
 const page = () => {
-  return (  
+return (  
     <div className="w-full h-screen flex items-center justify-center">
-    <RegisterForm />
+    <CreateRoomForm />
     </div>
   )
-}
 
+}
 export default page
