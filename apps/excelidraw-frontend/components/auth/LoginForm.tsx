@@ -31,7 +31,7 @@ export function LoginForm() {
             startTransition(() => login(values)
             .then(res => {
                 localStorage.setItem("token", res.token)
-                router.push("/")
+                router.push("/dashboard")
             })
             .catch(err => {
                 console.log(err)

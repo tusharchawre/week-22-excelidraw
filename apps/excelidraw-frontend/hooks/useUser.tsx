@@ -3,10 +3,22 @@
 import { useEffect, useState } from "react"
 
 interface User {
+    user : {id: string;
+    name: string;
+    room: {
+      id: string;
+      roomName: string;
+    }[];}
+  }
+  
+  interface UseUserResponse {
+    user: User | undefined; 
+    isLoading: boolean;
+    error: string | null; 
+  }
+  
 
-}
-
-export const useUser = () => {
+export const useUser = () : UseUserResponse => {
     const [user, setUser] = useState()
     const [isLoading , setIsLoading] = useState(false)
     const [error, setError] = useState(null)

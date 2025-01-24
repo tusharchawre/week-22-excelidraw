@@ -1,6 +1,6 @@
 import { Button } from "./ui/button"
 
-
+import Link from "next/link"
 
 export const Navbar = () => {
   return (
@@ -12,8 +12,12 @@ export const Navbar = () => {
     </div>
 
     <div className="flex gap-4">
+        <Link href={"/signup"}>
         <Button variant="secondary">Sign Up</Button>
+        </Link>
+        <Link href={"/signin"}>
         <Button >Sign In</Button>
+        </Link>
     </div>
     </div>
     )

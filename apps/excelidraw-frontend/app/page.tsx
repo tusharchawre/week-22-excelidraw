@@ -1,5 +1,6 @@
 "use client"
 import { Features } from '@/components/Features'
+import { Footer } from '@/components/Footer'
 import { Hero } from '@/components/Hero'
 import { Navbar } from '@/components/Navbar'
 import { useUser } from '@/hooks/useUser'
@@ -12,10 +13,8 @@ const page = () => {
       <>
       <Navbar />
       <Hero />
-      <div className="w-full h-screen ">
-        <Features />
-
-      </div>
+      <Features />
+      <Footer />
       </>
   )
 }
