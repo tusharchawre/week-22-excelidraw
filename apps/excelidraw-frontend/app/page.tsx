@@ -1,17 +1,22 @@
 "use client"
+import { Features } from '@/components/Features'
+import { Hero } from '@/components/Hero'
+import { Navbar } from '@/components/Navbar'
 import { useUser } from '@/hooks/useUser'
 import React from 'react'
 
 const page = () => {
 
-  const user = useUser()
-
-
 
   return (
-    <div className='text-red-500'>
-      {JSON.stringify(user)}
-    </div>
+      <>
+      <Navbar />
+      <Hero />
+      <div className="w-full h-screen ">
+        <Features />
+
+      </div>
+      </>
   )
 }
 
